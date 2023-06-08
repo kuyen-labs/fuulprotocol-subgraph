@@ -1,4 +1,3 @@
-import { Address } from "@graphprotocol/graph-ts";
 import { Budget } from "../../generated/schema";
 import {
   FungibleBudgetDeposited as FungibleBudgetDepositedEvent,
@@ -17,6 +16,7 @@ export function handleFungibleBudgetDeposited(
   entity.currency = event.params.currency; // Address of the currency contract
   entity.ownerAddress = event.params.account; // In this case the owner is the same as the project contract address
 
+  entity.transactionHash = event.transaction.hash;
   entity.blockNumber = event.params._event.block.number;
   entity.blockTimestamp = event.params._event.block.timestamp;
 

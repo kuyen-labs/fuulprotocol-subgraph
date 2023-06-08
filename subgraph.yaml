@@ -1,0 +1,54 @@
+specVersion: 0.0.5
+schema:
+  file: ./schema.graphql
+dataSources:
+  - kind: ethereum
+    name: FuulFactory
+    network: mumbai
+    source:
+      address: "0x7943fc4305d773d04c48093b99b45d46945fde3e"
+      abi: FuulFactory
+      startBlock: 0
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      entities:
+        - AttributorFeeUpdated
+        - ClientFeeUpdated
+        - CurrencyAdded
+        - CurrencyRemoved
+        - NftFeeCurrencyUpdated
+        - NftFixedFeeUpdated
+        - ProjectCooldownUpdated
+        - ProjectCreated
+        - ProjectRemovePeriodUpdated
+        - ProtocolFeeCollectorUpdated
+        - ProtocolFeeUpdated
+      abis:
+        - name: FuulFactory
+          file: ./abis/FuulFactory.json
+      eventHandlers:
+        - event: AttributorFeeUpdated(indexed uint256)
+          handler: handleAttributorFeeUpdated
+        - event: ClientFeeUpdated(indexed uint256)
+          handler: handleClientFeeUpdated
+        - event: CurrencyAdded(indexed address,uint8)
+          handler: handleCurrencyAdded
+        - event: CurrencyRemoved(indexed address,uint8)
+          handler: handleCurrencyRemoved
+        - event: NftFeeCurrencyUpdated(indexed address)
+          handler: handleNftFeeCurrencyUpdated
+        - event: NftFixedFeeUpdated(indexed uint256)
+          handler: handleNftFixedFeeUpdated
+        - event: ProjectCooldownUpdated(indexed uint256)
+          handler: handleProjectCooldownUpdated
+        - event: ProjectCreated(indexed uint256,indexed address,indexed address,string,address)
+          handler: handleProjectCreated
+        - event: ProjectRemovePeriodUpdated(indexed uint256)
+          handler: handleProjectRemovePeriodUpdated
+        - event: ProtocolFeeCollectorUpdated(indexed address)
+          handler: handleProtocolFeeCollectorUpdated
+        - event: ProtocolFeeUpdated(indexed uint256)
+          handler: handleProtocolFeeUpdated
+      file: ./src/fuul-factory.ts

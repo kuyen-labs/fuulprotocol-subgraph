@@ -1,0 +1,93 @@
+type AttributorFeeUpdated @entity(immutable: true) {
+  id: Bytes!
+  value: BigInt! # uint256
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type ClientFeeUpdated @entity(immutable: true) {
+  id: Bytes!
+  value: BigInt! # uint256
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type CurrencyAdded @entity(immutable: true) {
+  id: Bytes!
+  newCurrency: Bytes! # address
+  tokenType: Int! # uint8
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type CurrencyRemoved @entity(immutable: true) {
+  id: Bytes!
+  newCurrency: Bytes! # address
+  tokenType: Int! # uint8
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type NftFeeCurrencyUpdated @entity(immutable: true) {
+  id: Bytes!
+  newCurrency: Bytes! # address
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type NftFixedFeeUpdated @entity(immutable: true) {
+  id: Bytes!
+  value: BigInt! # uint256
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type ProjectCooldownUpdated @entity(immutable: true) {
+  id: Bytes!
+  value: BigInt! # uint256
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type ProjectCreated @entity(immutable: true) {
+  id: Bytes!
+  projectId: BigInt! # uint256
+  deployedAddress: Bytes! # address
+  eventSigner: Bytes! # address
+  projectInfoURI: String! # string
+  clientFeeCollector: Bytes! # address
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type ProjectRemovePeriodUpdated @entity(immutable: true) {
+  id: Bytes!
+  value: BigInt! # uint256
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type ProtocolFeeCollectorUpdated @entity(immutable: true) {
+  id: Bytes!
+  newCollector: Bytes! # address
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type ProtocolFeeUpdated @entity(immutable: true) {
+  id: Bytes!
+  value: BigInt! # uint256
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}

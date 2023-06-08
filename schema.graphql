@@ -91,3 +91,14 @@ type ProtocolFeeUpdated @entity(immutable: true) {
   blockTimestamp: BigInt!
   transactionHash: Bytes!
 }
+
+type Budget @entity(immutable: true) {
+  id: Bytes!
+  ownerAddress: Bytes! # address
+  projectContractAddress: Bytes! # address
+  currency: Bytes! # address
+  amount: BigInt! # uint256
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}

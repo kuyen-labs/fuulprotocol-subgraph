@@ -1,0 +1,5 @@
+generated
+build
+dist
+node_modules
+.vscode

@@ -51,4 +51,27 @@ dataSources:
           handler: handleProtocolFeeCollectorUpdated
         - event: ProtocolFeeUpdated(indexed uint256)
           handler: handleProtocolFeeUpdated
-      file: ./src/fuul-factory.ts
+      file: ./src/mappings/fuul-factory.ts
+templates:
+  - name: FuulProject
+    kind: ethereum
+    network: mumbai
+    source:
+      abi: FuulProject
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      file: ./src/mappings/fuul-project.ts
+      entities:
+        - FungibleBudgetDeposited
+        - Attributed
+      abis:
+        - name: FuulProject
+          file: ./abis/FuulProject.json
+      eventHandlers:
+        - event: FungibleBudgetDeposited(indexed address,indexed uint256,indexed address)
+          handler: handleFungibleBudgetDeposited
+        - event: Attributed(indexed address,indexed uint256,address[5],uint256[5],bytes32)
+          handler: handleAttributed
+        

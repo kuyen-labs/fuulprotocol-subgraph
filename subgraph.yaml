@@ -66,6 +66,7 @@ templates:
       entities:
         - FungibleBudgetDeposited
         - Attributed
+        - FungibleBudgetRemoved
       abis:
         - name: FuulProject
           file: ./abis/FuulProject.json
@@ -74,4 +75,6 @@ templates:
           handler: handleFungibleBudgetDeposited
         - event: Attributed(indexed address,indexed uint256,address[5],uint256[5],bytes32)
           handler: handleAttributed
+        - event: FungibleBudgetRemoved(indexed address,indexed uint256,indexed address)
+          handler: handleFungibleBudgetRemoved
         

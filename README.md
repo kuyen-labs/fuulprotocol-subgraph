@@ -7,6 +7,7 @@ Graph that indexes and provides aggregated data for Fuul Protocol contracts on t
 - [Installation](#installation)
 - [Testing](#testing)
 - [Usage](#usage)
+- [Configuration](#configuration)
 
 ## Installation
 

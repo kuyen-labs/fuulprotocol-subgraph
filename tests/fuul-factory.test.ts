@@ -3,44 +3,45 @@ import {
   describe,
   test,
   clearStore,
-  beforeAll,
   afterAll,
 } from "matchstick-as/assembly/index";
-import { BigInt, Address } from "@graphprotocol/graph-ts";
-import { AttributorFeeUpdated } from "../generated/schema";
-import { AttributorFeeUpdated as AttributorFeeUpdatedEvent } from "../generated/FuulFactory/FuulFactory";
-import { handleAttributorFeeUpdated } from "../src/mappings/fuul-factory";
-import { createAttributorFeeUpdatedEvent } from "./fuul-factory-utils";
-
-// Tests structure (matchstick-as >=0.5.0)
-// https://thegraph.com/docs/en/developer/matchstick/#tests-structure-0-5-0
+import { Address, BigInt } from "@graphprotocol/graph-ts";
+import { handleProjectCreated } from "../src/mappings/fuul-factory";
+import { createProjectCreatedEvent } from "./fuul-factory-utils";
 
 describe("Describe entity assertions", () => {
-  beforeAll(() => {
-    let value = BigInt.fromI32(234);
-    let newAttributorFeeUpdatedEvent = createAttributorFeeUpdatedEvent(value);
-    handleAttributorFeeUpdated(newAttributorFeeUpdatedEvent);
-  });
-
   afterAll(() => {
     clearStore();
   });
 
-  // For more test scenarios, see:
-  // https://thegraph.com/docs/en/developer/matchstick/#write-a-unit-test
-
-  test("AttributorFeeUpdated created and stored", () => {
-    assert.entityCount("AttributorFeeUpdated", 1);
-
-    // 0xa16081f360e3847006db660bae1c6d1b2e17ec2a is the default address used in newMockEvent() function
-    assert.fieldEquals(
-      "AttributorFeeUpdated",
-      "0xa16081f360e3847006db660bae1c6d1b2e17ec2a-1",
-      "value",
-      "234"
+  test("ProjectCreatedEvent created and stored", () => {
+    const deployedAddress = Address.fromString(
+      "0xa16081f360e3847006db660bae1c6d1b2e17ec2a"
     );
+    const eventSigner = Address.fromString(
+      "0xa16081f360e3847006db660bae1c6d1b2e17ec2b"
+    );
+    const clientFeeCollector = Address.fromString(
+      "0xa16081f360e3847006db660bae1c6d1b2e17ec2c"
+    );
+    const uri = "https://example.com";
+    const newProjectEvent = createProjectCreatedEvent(
+      BigInt.fromI32(1),
+      deployedAddress,
+      eventSigner,
+      uri,
+      clientFeeCollector
+    );
+    handleProjectCreated(newProjectEvent);
 
-    // More assert options:
-    // https://thegraph.com/docs/en/developer/matchstick/#asserts
+    assert.entityCount("Project", 1);
+    assert.fieldEquals(
+      "Project",
+      newProjectEvent.transaction.hash
+        .concatI32(newProjectEvent.logIndex.toI32())
+        .toHexString(),
+      "deployedAddress",
+      deployedAddress.toHexString()
+    );
   });
 });

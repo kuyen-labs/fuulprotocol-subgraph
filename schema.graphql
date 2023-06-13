@@ -56,16 +56,6 @@ type ProjectCooldownUpdated @entity(immutable: true) {
   transactionHash: Bytes!
 }
 
-type Project @entity {
-  id: Bytes!
-  projectId: BigInt! # uint256
-  deployedAddress: Bytes! # address
-  eventSigner: Bytes! # address
-  projectInfoURI: String! # string
-  clientFeeCollector: Bytes! # address
-  balance: [Budget!]! @derivedFrom(field: "account")
-}
-
 type ProjectRemovePeriodUpdated @entity(immutable: true) {
   id: Bytes!
   value: BigInt! # uint256
@@ -76,7 +66,7 @@ type ProjectRemovePeriodUpdated @entity(immutable: true) {
 
 type ProtocolFeeCollectorUpdated @entity(immutable: true) {
   id: Bytes!
-  newCollector: Bytes! # address
+  newCollector: Bytes! 
   blockNumber: BigInt!
   blockTimestamp: BigInt!
   transactionHash: Bytes!
@@ -84,7 +74,7 @@ type ProtocolFeeCollectorUpdated @entity(immutable: true) {
 
 type ProtocolFeeUpdated @entity(immutable: true) {
   id: Bytes!
-  value: BigInt! # uint256
+  value: BigInt! 
   blockNumber: BigInt!
   blockTimestamp: BigInt!
   transactionHash: Bytes!
@@ -92,18 +82,35 @@ type ProtocolFeeUpdated @entity(immutable: true) {
 
 
 type Budget @entity {
-  id: Bytes!
-  account: Project! 
+  id: String!
+  account: Project!
   currency: Bytes! 
   amount: BigInt!
   remainingBudgetReferenceAmount: BigInt!
   remainingBudgetPercentage: BigInt!
 }
 
-type UserBalance @entity {
+type Project @entity {
   id: Bytes!
-  account: Bytes! 
+  projectId: BigInt! 
+  deployedAddress: Bytes! 
+  eventSigner: Bytes! 
+  projectInfoURI: String! 
+  clientFeeCollector: Bytes! 
+  budgets: [Budget!]! @derivedFrom(field: "account")
+}
+
+type UserBalance @entity {
+  id: String!
+  account: User! 
+  projectContractAddress: Bytes!
   currency: Bytes!
   claimed: BigInt!
   availableToClaim: BigInt!
+}
+
+type User @entity {
+  id: String!
+  account: Bytes!
+  balance: [UserBalance!]! @derivedFrom(field: "account")
 }

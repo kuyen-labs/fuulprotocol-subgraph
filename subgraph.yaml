@@ -67,14 +67,17 @@ templates:
         - FungibleBudgetDeposited
         - Attributed
         - FungibleBudgetRemoved
+        - Claimed
       abis:
         - name: FuulProject
           file: ./abis/FuulProject.json
       eventHandlers:
-        - event: FungibleBudgetDeposited(indexed address,indexed uint256,indexed address)
+        - event: FungibleBudgetDeposited(indexed address,uint256,indexed address)
           handler: handleFungibleBudgetDeposited
         - event: Attributed(indexed address,indexed uint256,address[5],uint256[5],bytes32)
           handler: handleAttributed
-        - event: FungibleBudgetRemoved(indexed address,indexed uint256,indexed address)
+        - event: FungibleBudgetRemoved(indexed address,uint256,indexed address)
           handler: handleFungibleBudgetRemoved
+        - event: Claimed(indexed address,indexed address,uint256,uint256[],uint256[])
+          handler: handleClaimed
         

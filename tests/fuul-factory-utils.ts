@@ -1,5 +1,5 @@
-import { newMockEvent } from "matchstick-as"
-import { ethereum, BigInt, Address } from "@graphprotocol/graph-ts"
+import { newMockEvent } from "matchstick-as";
+import { ethereum, BigInt, Address } from "@graphprotocol/graph-ts";
 import {
   AttributorFeeUpdated,
   ClientFeeUpdated,
@@ -11,83 +11,83 @@ import {
   ProjectCreated,
   ProjectRemovePeriodUpdated,
   ProtocolFeeCollectorUpdated,
-  ProtocolFeeUpdated
-} from "../generated/FuulFactory/FuulFactory"
+  ProtocolFeeUpdated,
+} from "../generated/FuulFactory/FuulFactory";
 
 export function createAttributorFeeUpdatedEvent(
   value: BigInt
 ): AttributorFeeUpdated {
   let attributorFeeUpdatedEvent = changetype<AttributorFeeUpdated>(
     newMockEvent()
-  )
+  );
 
-  attributorFeeUpdatedEvent.parameters = new Array()
+  attributorFeeUpdatedEvent.parameters = new Array();
 
   attributorFeeUpdatedEvent.parameters.push(
     new ethereum.EventParam("value", ethereum.Value.fromUnsignedBigInt(value))
-  )
+  );
 
-  return attributorFeeUpdatedEvent
+  return attributorFeeUpdatedEvent;
 }
 
 export function createClientFeeUpdatedEvent(value: BigInt): ClientFeeUpdated {
-  let clientFeeUpdatedEvent = changetype<ClientFeeUpdated>(newMockEvent())
+  let clientFeeUpdatedEvent = changetype<ClientFeeUpdated>(newMockEvent());
 
-  clientFeeUpdatedEvent.parameters = new Array()
+  clientFeeUpdatedEvent.parameters = new Array();
 
   clientFeeUpdatedEvent.parameters.push(
     new ethereum.EventParam("value", ethereum.Value.fromUnsignedBigInt(value))
-  )
+  );
 
-  return clientFeeUpdatedEvent
+  return clientFeeUpdatedEvent;
 }
 
 export function createCurrencyAddedEvent(
   newCurrency: Address,
   tokenType: i32
 ): CurrencyAdded {
-  let currencyAddedEvent = changetype<CurrencyAdded>(newMockEvent())
+  let currencyAddedEvent = changetype<CurrencyAdded>(newMockEvent());
 
-  currencyAddedEvent.parameters = new Array()
+  currencyAddedEvent.parameters = new Array();
 
   currencyAddedEvent.parameters.push(
     new ethereum.EventParam(
       "newCurrency",
       ethereum.Value.fromAddress(newCurrency)
     )
-  )
+  );
   currencyAddedEvent.parameters.push(
     new ethereum.EventParam(
       "tokenType",
       ethereum.Value.fromUnsignedBigInt(BigInt.fromI32(tokenType))
     )
-  )
+  );
 
-  return currencyAddedEvent
+  return currencyAddedEvent;
 }
 
 export function createCurrencyRemovedEvent(
   newCurrency: Address,
   tokenType: i32
 ): CurrencyRemoved {
-  let currencyRemovedEvent = changetype<CurrencyRemoved>(newMockEvent())
+  let currencyRemovedEvent = changetype<CurrencyRemoved>(newMockEvent());
 
-  currencyRemovedEvent.parameters = new Array()
+  currencyRemovedEvent.parameters = new Array();
 
   currencyRemovedEvent.parameters.push(
     new ethereum.EventParam(
       "newCurrency",
       ethereum.Value.fromAddress(newCurrency)
     )
-  )
+  );
   currencyRemovedEvent.parameters.push(
     new ethereum.EventParam(
       "tokenType",
       ethereum.Value.fromUnsignedBigInt(BigInt.fromI32(tokenType))
     )
-  )
+  );
 
-  return currencyRemovedEvent
+  return currencyRemovedEvent;
 }
 
 export function createNftFeeCurrencyUpdatedEvent(
@@ -95,32 +95,32 @@ export function createNftFeeCurrencyUpdatedEvent(
 ): NftFeeCurrencyUpdated {
   let nftFeeCurrencyUpdatedEvent = changetype<NftFeeCurrencyUpdated>(
     newMockEvent()
-  )
+  );
 
-  nftFeeCurrencyUpdatedEvent.parameters = new Array()
+  nftFeeCurrencyUpdatedEvent.parameters = new Array();
 
   nftFeeCurrencyUpdatedEvent.parameters.push(
     new ethereum.EventParam(
       "newCurrency",
       ethereum.Value.fromAddress(newCurrency)
     )
-  )
+  );
 
-  return nftFeeCurrencyUpdatedEvent
+  return nftFeeCurrencyUpdatedEvent;
 }
 
 export function createNftFixedFeeUpdatedEvent(
   value: BigInt
 ): NftFixedFeeUpdated {
-  let nftFixedFeeUpdatedEvent = changetype<NftFixedFeeUpdated>(newMockEvent())
+  let nftFixedFeeUpdatedEvent = changetype<NftFixedFeeUpdated>(newMockEvent());
 
-  nftFixedFeeUpdatedEvent.parameters = new Array()
+  nftFixedFeeUpdatedEvent.parameters = new Array();
 
   nftFixedFeeUpdatedEvent.parameters.push(
     new ethereum.EventParam("value", ethereum.Value.fromUnsignedBigInt(value))
-  )
+  );
 
-  return nftFixedFeeUpdatedEvent
+  return nftFixedFeeUpdatedEvent;
 }
 
 export function createProjectCooldownUpdatedEvent(
@@ -128,15 +128,15 @@ export function createProjectCooldownUpdatedEvent(
 ): ProjectCooldownUpdated {
   let projectCooldownUpdatedEvent = changetype<ProjectCooldownUpdated>(
     newMockEvent()
-  )
+  );
 
-  projectCooldownUpdatedEvent.parameters = new Array()
+  projectCooldownUpdatedEvent.parameters = new Array();
 
   projectCooldownUpdatedEvent.parameters.push(
     new ethereum.EventParam("value", ethereum.Value.fromUnsignedBigInt(value))
-  )
+  );
 
-  return projectCooldownUpdatedEvent
+  return projectCooldownUpdatedEvent;
 }
 
 export function createProjectCreatedEvent(
@@ -146,42 +146,42 @@ export function createProjectCreatedEvent(
   projectInfoURI: string,
   clientFeeCollector: Address
 ): ProjectCreated {
-  let projectCreatedEvent = changetype<ProjectCreated>(newMockEvent())
+  let projectCreatedEvent = changetype<ProjectCreated>(newMockEvent());
 
-  projectCreatedEvent.parameters = new Array()
+  projectCreatedEvent.parameters = new Array();
 
   projectCreatedEvent.parameters.push(
     new ethereum.EventParam(
       "projectId",
       ethereum.Value.fromUnsignedBigInt(projectId)
     )
-  )
+  );
   projectCreatedEvent.parameters.push(
     new ethereum.EventParam(
       "deployedAddress",
       ethereum.Value.fromAddress(deployedAddress)
     )
-  )
+  );
   projectCreatedEvent.parameters.push(
     new ethereum.EventParam(
       "eventSigner",
       ethereum.Value.fromAddress(eventSigner)
     )
-  )
+  );
   projectCreatedEvent.parameters.push(
     new ethereum.EventParam(
       "projectInfoURI",
       ethereum.Value.fromString(projectInfoURI)
     )
-  )
+  );
   projectCreatedEvent.parameters.push(
     new ethereum.EventParam(
       "clientFeeCollector",
       ethereum.Value.fromAddress(clientFeeCollector)
     )
-  )
+  );
 
-  return projectCreatedEvent
+  return projectCreatedEvent;
 }
 
 export function createProjectRemovePeriodUpdatedEvent(
@@ -189,15 +189,15 @@ export function createProjectRemovePeriodUpdatedEvent(
 ): ProjectRemovePeriodUpdated {
   let projectRemovePeriodUpdatedEvent = changetype<ProjectRemovePeriodUpdated>(
     newMockEvent()
-  )
+  );
 
-  projectRemovePeriodUpdatedEvent.parameters = new Array()
+  projectRemovePeriodUpdatedEvent.parameters = new Array();
 
   projectRemovePeriodUpdatedEvent.parameters.push(
     new ethereum.EventParam("value", ethereum.Value.fromUnsignedBigInt(value))
-  )
+  );
 
-  return projectRemovePeriodUpdatedEvent
+  return projectRemovePeriodUpdatedEvent;
 }
 
 export function createProtocolFeeCollectorUpdatedEvent(
@@ -205,30 +205,30 @@ export function createProtocolFeeCollectorUpdatedEvent(
 ): ProtocolFeeCollectorUpdated {
   let protocolFeeCollectorUpdatedEvent = changetype<
     ProtocolFeeCollectorUpdated
-  >(newMockEvent())
+  >(newMockEvent());
 
-  protocolFeeCollectorUpdatedEvent.parameters = new Array()
+  protocolFeeCollectorUpdatedEvent.parameters = new Array();
 
   protocolFeeCollectorUpdatedEvent.parameters.push(
     new ethereum.EventParam(
       "newCollector",
       ethereum.Value.fromAddress(newCollector)
     )
-  )
+  );
 
-  return protocolFeeCollectorUpdatedEvent
+  return protocolFeeCollectorUpdatedEvent;
 }
 
 export function createProtocolFeeUpdatedEvent(
   value: BigInt
 ): ProtocolFeeUpdated {
-  let protocolFeeUpdatedEvent = changetype<ProtocolFeeUpdated>(newMockEvent())
+  let protocolFeeUpdatedEvent = changetype<ProtocolFeeUpdated>(newMockEvent());
 
-  protocolFeeUpdatedEvent.parameters = new Array()
+  protocolFeeUpdatedEvent.parameters = new Array();
 
   protocolFeeUpdatedEvent.parameters.push(
     new ethereum.EventParam("value", ethereum.Value.fromUnsignedBigInt(value))
-  )
+  );
 
-  return protocolFeeUpdatedEvent
+  return protocolFeeUpdatedEvent;
 }

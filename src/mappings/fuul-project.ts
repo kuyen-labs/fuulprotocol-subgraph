@@ -1,40 +1,43 @@
-import { BigInt, Bytes, dataSource } from "@graphprotocol/graph-ts";
-import { Budget, UserBalance } from "../../generated/schema";
+import { BigInt, Bytes } from "@graphprotocol/graph-ts";
+import { Budget, User, UserBalance } from "../../generated/schema";
 import {
   FungibleBudgetDeposited as FungibleBudgetDepositedEvent,
   FungibleBudgetRemoved as FungibleBudgetRemovedEvent,
   Attributed as AttributedEvent,
+  Claimed as ClaimedEvent,
 } from "../../generated/templates/FuulProject/FuulProject";
-
-let context = dataSource.context();
-let projectAddress = Bytes.fromHexString(context.getString("projectAddress"));
+import { getBudgetId, getUserBalanceId } from "../utils";
 
 export function handleFungibleBudgetDeposited(
   event: FungibleBudgetDepositedEvent
 ): void {
-  let entity = Budget.load(event.address);
+  const id = getBudgetId(event.address, event.params.currency);
+  let budget = Budget.load(id);
 
-  if (entity == null) {
-    entity = new Budget(projectAddress);
+  if (budget == null) {
+    budget = new Budget(id);
 
-    entity.account = event.params.account;
-    entity.amount = event.params.amount;
-    entity.remainingBudgetPercentage = BigInt.fromI32(100);
-    entity.remainingBudgetReferenceAmount = event.params.amount;
+    budget.account = event.address;
+    budget.amount = event.params.amount;
+    budget.currency = event.params.currency;
+    budget.remainingBudgetPercentage = BigInt.fromI32(100);
+    budget.remainingBudgetReferenceAmount = event.params.amount;
+  } else {
+    budget.amount = budget.amount.plus(event.params.amount);
+    budget.remainingBudgetReferenceAmount = budget.remainingBudgetReferenceAmount.plus(
+      event.params.amount
+    );
   }
 
-  entity.amount = entity.amount.plus(event.params.amount);
-  entity.remainingBudgetReferenceAmount = entity.remainingBudgetReferenceAmount.plus(
-    event.params.amount
-  );
-
-  entity.save();
+  budget.save();
 }
 
 export function handleFungibleBudgetRemoved(
   event: FungibleBudgetRemovedEvent
 ): void {
-  let entity = Budget.load(event.address);
+  const id = getBudgetId(event.address, event.params.currency);
+
+  let entity = Budget.load(id);
 
   if (entity != null) {
     entity.amount = entity.amount.minus(event.params.amount);
@@ -54,24 +57,53 @@ export function handleAttributed(event: AttributedEvent): void {
   for (let index = 0; index < receivers.length; index++) {
     const receiverAddress = receivers[index];
 
-    let entity = UserBalance.load(receiverAddress);
+    const id = getUserBalanceId(receiverAddress, currency, event.address);
 
-    if (entity == null) {
-      entity = new UserBalance(receiverAddress);
+    let userBalance = UserBalance.load(id);
 
-      entity.availableToClaim = amounts[index];
-      entity.currency = currency;
-      entity.claimed = BigInt.fromI32(0);
+    if (userBalance == null) {
+      userBalance = new UserBalance(id);
+
+      userBalance.account = receiverAddress.toHexString();
+      userBalance.projectContractAddress = event.address;
+      userBalance.availableToClaim = amounts[index];
+      userBalance.currency = currency;
+      userBalance.claimed = BigInt.fromI32(0);
+    } else {
+      userBalance.availableToClaim = userBalance.availableToClaim.plus(
+        amounts[index]
+      );
     }
 
-    entity.availableToClaim = entity.availableToClaim.plus(amounts[index]);
-
-    entity.save();
+    userBalance.save();
   }
 
-  const projectBudget = Budget.load(event.address);
+  const projectBudgetId = getBudgetId(event.address, currency);
+  const projectBudget = Budget.load(projectBudgetId);
 
   if (projectBudget != null) {
     projectBudget.amount = projectBudget.amount.minus(event.params.totalAmount);
+    projectBudget.remainingBudgetPercentage = projectBudget.amount.div(
+      projectBudget.remainingBudgetReferenceAmount
+    );
+  }
+}
+
+export function handleClaimed(event: ClaimedEvent): void {
+  const id = getUserBalanceId(
+    event.params.account,
+    event.params.currency,
+    event.address
+  );
+
+  let userBalance = UserBalance.load(id);
+
+  if (userBalance != null) {
+    userBalance.availableToClaim = userBalance.availableToClaim.minus(
+      event.params.amount
+    );
+    userBalance.claimed = userBalance.claimed.plus(event.params.amount);
+
+    userBalance.save();
   }
 }

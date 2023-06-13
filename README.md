@@ -1,6 +1,6 @@
 # Fuul protocol subgraphs
 
-Collection of graphs that indexes and provides aggregated data for Fuul protocol on the Polygon blockchain.
+Graph that indexes and provides aggregated data for Fuul Protocol contracts on the Polygon blockchain.
 
 ## Table of Contents
 

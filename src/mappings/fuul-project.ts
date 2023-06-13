@@ -85,28 +85,11 @@ export function handleClaimed(event: ClaimedEvent): void {
     event.address
   );
 
-  userBalance.availableToClaim = userBalance.availableToClaim
-    ? userBalance.availableToClaim.minus(event.params.amount)
-    : BigInt.fromI32(0);
-  userBalance.claimed = userBalance.claimed
-    ? userBalance.claimed.plus(event.params.amount)
-    : event.params.amount;
+  userBalance.availableToClaim = userBalance.availableToClaim.minus(
+    event.params.amount
+  );
+  userBalance.claimed = userBalance.claimed.plus(event.params.amount);
 
   user.save();
   userBalance.save();
-
-  // const id = event.params.account.toHexString();
-
-  // const balanceId = saveUserBalance(
-  //   event.params.account,
-  //   event.params.amount,
-  //   event.params.currency,
-  //   event.address
-  // );
-
-  // let user = User.load(id) as User;
-
-  // user.balances = updateBalances(user, balanceId);
-
-  // user.save();
 }

@@ -12,7 +12,7 @@ export function getOrCreateUserBalance(
   let userBalance = UserBalance.load(id);
 
   if (userBalance == null) {
-    userBalance = new UserBalance(address.toHexString());
+    userBalance = new UserBalance(id);
 
     userBalance.owner = address.toHexString();
     userBalance.project = projectAddress.toHexString();

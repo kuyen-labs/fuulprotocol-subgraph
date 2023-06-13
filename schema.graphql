@@ -83,7 +83,7 @@ type ProtocolFeeUpdated @entity(immutable: true) {
 
 type Budget @entity {
   id: ID!
-  account: Bytes!
+  owner: Project!
   currency: Bytes! 
   amount: BigInt!
   remainingBudgetReferenceAmount: BigInt!
@@ -97,13 +97,14 @@ type Project @entity {
   eventSigner: Bytes! 
   projectInfoURI: String! 
   clientFeeCollector: Bytes! 
-  budgets: [Budget!]!
+  budgets: [Budget!]! @derivedFrom(field: "owner")
+  userBalances: [UserBalance!]! @derivedFrom(field: "project")
 }
 
 type UserBalance @entity {
   id: ID!
-  account: Bytes!
-  projectContractAddress: Bytes!
+  owner: User!
+  project: Project!
   currency: Bytes!
   claimed: BigInt!
   availableToClaim: BigInt!
@@ -111,6 +112,6 @@ type UserBalance @entity {
 
 type User @entity {
   id: ID!
-  account: Bytes!
-  balances: [UserBalance!]!
+  address: Bytes!
+  balances: [UserBalance!]! @derivedFrom(field: "owner")
 }

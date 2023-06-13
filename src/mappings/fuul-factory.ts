@@ -134,7 +134,6 @@ export function handleProjectCreated(event: ProjectCreatedEvent): void {
   entity.eventSigner = event.params.eventSigner;
   entity.projectInfoURI = event.params.projectInfoURI;
   entity.clientFeeCollector = event.params.clientFeeCollector;
-  entity.budgets = [];
 
   // Start indexing the new project contract; `event.params.deployedAddress` is the
   // address of the new deployed project contract

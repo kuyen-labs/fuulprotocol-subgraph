@@ -38,7 +38,7 @@ npm run test
 ```
 
 ## Usage
-To interact with the DeFi Analytics Subgraph and retrieve data, follow these steps:
+To interact with the Fuul Protocol Subgraph and retrieve data, follow these steps:
 
 1. Deploy the subgraph to a blockchain network (see Installation section).
 2. Once deployed, the subgraph will automatically start indexing relevant data from Fuul Protocol transactions on the deployed network.

@@ -128,7 +128,8 @@ export function handleProjectCooldownUpdated(
 }
 
 export function handleProjectCreated(event: ProjectCreatedEvent): void {
-  let entity = new Project(event.address.toHexString());
+  let entity = new Project(event.params.deployedAddress.toHexString());
+
   entity.projectId = event.params.projectId;
   entity.deployedAddress = event.params.deployedAddress;
   entity.eventSigner = event.params.eventSigner;

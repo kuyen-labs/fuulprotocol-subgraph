@@ -87,7 +87,6 @@ type Budget @entity {
   currency: Bytes! 
   amount: BigInt!
   remainingBudgetReferenceAmount: BigInt!
-  remainingBudgetPercentage: BigInt!
 }
 
 type Project @entity {
@@ -97,8 +96,8 @@ type Project @entity {
   eventSigner: Bytes! 
   projectInfoURI: String! 
   clientFeeCollector: Bytes! 
-  budgets: [Budget!]! @derivedFrom(field: "owner")
-  userBalances: [UserBalance!]! @derivedFrom(field: "project")
+  budgets: [Budget!] @derivedFrom(field: "owner")
+  userBalances: [UserBalance!] @derivedFrom(field: "project")
 }
 
 type UserBalance @entity {
@@ -113,5 +112,5 @@ type UserBalance @entity {
 type User @entity {
   id: ID!
   address: Bytes!
-  balances: [UserBalance!]! @derivedFrom(field: "owner")
+  balances: [UserBalance!] @derivedFrom(field: "owner")
 }

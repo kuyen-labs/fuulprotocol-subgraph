@@ -21,9 +21,6 @@ export function handleFungibleBudgetDeposited(
   budget.remainingBudgetReferenceAmount = budget.remainingBudgetReferenceAmount
     ? budget.remainingBudgetReferenceAmount.plus(event.params.amount)
     : event.params.amount;
-  budget.remainingBudgetPercentage = budget.amount
-    ? budget.amount.div(budget.remainingBudgetReferenceAmount)
-    : BigInt.fromI32(100);
 
   budget.save();
 }
@@ -40,9 +37,6 @@ export function handleFungibleBudgetRemoved(
   budget.remainingBudgetReferenceAmount = budget.remainingBudgetReferenceAmount
     ? budget.remainingBudgetReferenceAmount.minus(event.params.amount)
     : event.params.amount;
-  budget.remainingBudgetPercentage = budget.amount
-    ? budget.amount.div(budget.remainingBudgetReferenceAmount)
-    : BigInt.fromI32(100);
 
   budget.save();
 }
@@ -79,9 +73,6 @@ export function handleAttributed(event: AttributedEvent): void {
   const projectBudget = getOrCreateBudget(event.address, currency);
 
   projectBudget.amount = projectBudget.amount.minus(event.params.totalAmount);
-  projectBudget.remainingBudgetPercentage = projectBudget.amount.div(
-    projectBudget.remainingBudgetReferenceAmount
-  );
 
   projectBudget.save();
 }

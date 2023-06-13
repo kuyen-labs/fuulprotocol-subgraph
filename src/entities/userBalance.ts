@@ -1,4 +1,4 @@
-import { Address } from "@graphprotocol/graph-ts";
+import { Address, BigInt } from "@graphprotocol/graph-ts";
 import { UserBalance } from "../../generated/schema";
 import { getUserBalanceId } from "../utils";
 
@@ -15,6 +15,10 @@ export function getOrCreateUserBalance(
     userBalance = new UserBalance(address.toHexString());
 
     userBalance.owner = address.toHexString();
+    userBalance.project = projectAddress.toHexString();
+    userBalance.currency = currency;
+    userBalance.availableToClaim = BigInt.fromI32(0);
+    userBalance.claimed = BigInt.fromI32(0);
 
     userBalance.save();
   }

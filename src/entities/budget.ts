@@ -13,6 +13,9 @@ export function getOrCreateBudget(
     budget = new Budget(id);
 
     budget.owner = projectAddress.toHexString();
+    budget.amount = BigInt.fromI32(0);
+    budget.currency = currency;
+    budget.remainingBudgetReferenceAmount = BigInt.fromI32(0);
 
     budget.save();
   }

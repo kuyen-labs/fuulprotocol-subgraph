@@ -37,9 +37,7 @@ describe("Describe entity assertions", () => {
     assert.entityCount("Project", 1);
     assert.fieldEquals(
       "Project",
-      newProjectEvent.transaction.hash
-        .concatI32(newProjectEvent.logIndex.toI32())
-        .toHexString(),
+      deployedAddress.toHexString(),
       "deployedAddress",
       deployedAddress.toHexString()
     );

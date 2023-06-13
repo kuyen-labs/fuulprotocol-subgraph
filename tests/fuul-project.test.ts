@@ -104,6 +104,13 @@ describe("Describe entity assertions", () => {
       newAttributedEvent.address.toHexString()
     );
 
+    assert.fieldEquals(
+      "Budget",
+      projectBudgetId,
+      "amount",
+      INITIAL_BUDGET.minus(totalAmount).toString()
+    );
+
     assert.entityCount("UserBalance", receivers.length);
 
     for (let i = 0; i < receivers.length; i++) {

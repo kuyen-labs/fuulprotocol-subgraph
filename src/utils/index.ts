@@ -1,7 +1,10 @@
 import { Address } from "@graphprotocol/graph-ts";
 
-export const getBudgetId = (address: Address, currency: Address): string => {
-  return address
+export const getBudgetId = (
+  projectContractAddress: Address,
+  currency: Address
+): string => {
+  return projectContractAddress
     .toHexString()
     .concat("-")
     .concat(currency.toHexString());

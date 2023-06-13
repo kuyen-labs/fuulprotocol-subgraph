@@ -1,4 +1,4 @@
-import { Address, BigInt } from "@graphprotocol/graph-ts";
+import { Address, BigInt, log } from "@graphprotocol/graph-ts";
 import { Budget } from "../../generated/schema";
 import { getBudgetId } from "../utils";
 
@@ -16,9 +16,10 @@ export function getOrCreateBudget(
     budget.amount = BigInt.fromI32(0);
     budget.currency = currency;
     budget.remainingBudgetReferenceAmount = BigInt.fromI32(0);
-
-    budget.save();
   }
 
+  log.info("New Budget with id: {}", [budget.id.toString()]);
+
+  budget.save();
   return budget as Budget;
 }

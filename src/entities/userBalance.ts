@@ -1,4 +1,4 @@
-import { Address, BigInt } from "@graphprotocol/graph-ts";
+import { Address, BigInt, log } from "@graphprotocol/graph-ts";
 import { UserBalance } from "../../generated/schema";
 import { getUserBalanceId } from "../utils";
 
@@ -11,6 +11,8 @@ export function getOrCreateUserBalance(
 
   let userBalance = UserBalance.load(id);
 
+  log.info("getOrCreateUserBalance: {}", [id]);
+
   if (userBalance == null) {
     userBalance = new UserBalance(id);
 
@@ -19,9 +21,10 @@ export function getOrCreateUserBalance(
     userBalance.currency = currency;
     userBalance.availableToClaim = BigInt.fromI32(0);
     userBalance.claimed = BigInt.fromI32(0);
-
-    userBalance.save();
   }
 
+  log.info("Updating UserBalance with id: {}", [userBalance.id.toString()]);
+
+  userBalance.save();
   return userBalance as UserBalance;
 }

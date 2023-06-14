@@ -7,7 +7,7 @@ export function getOrCreateBudget(
   currency: Address
 ): Budget {
   const id = getBudgetId(projectAddress, currency);
-  let budget = Budget.loadInBlock(id);
+  let budget = Budget.load(id);
 
   if (budget == null) {
     budget = new Budget(id);

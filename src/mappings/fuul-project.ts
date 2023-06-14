@@ -1,52 +1,59 @@
-import { BigInt, Bytes } from "@graphprotocol/graph-ts";
-import { Budget, User, UserBalance } from "../../generated/schema";
+import { BigInt, log } from "@graphprotocol/graph-ts";
 import {
   FungibleBudgetDeposited as FungibleBudgetDepositedEvent,
   FungibleBudgetRemoved as FungibleBudgetRemovedEvent,
   Attributed as AttributedEvent,
   Claimed as ClaimedEvent,
 } from "../../generated/templates/FuulProject/FuulProject";
-import { getBudgetId, getUserBalanceId } from "../utils";
+import { getOrCreateUser } from "../entities/user";
+import { getOrCreateUserBalance } from "../entities/userBalance";
+import { getOrCreateBudget } from "../entities/budget";
 
 export function handleFungibleBudgetDeposited(
   event: FungibleBudgetDepositedEvent
 ): void {
-  const id = getBudgetId(event.address, event.params.currency);
-  let budget = Budget.load(id);
+  log.info(
+    "Handle budget deposited with contract address: {} and currency: {}",
+    [event.address.toHexString(), event.params.currency.toHexString()]
+  );
 
-  if (budget == null) {
-    budget = new Budget(id);
+  let budget = getOrCreateBudget(event.address, event.params.currency);
 
-    budget.account = event.address;
-    budget.amount = event.params.amount;
-    budget.currency = event.params.currency;
-    budget.remainingBudgetPercentage = BigInt.fromI32(100);
-    budget.remainingBudgetReferenceAmount = event.params.amount;
-  } else {
-    budget.amount = budget.amount.plus(event.params.amount);
-    budget.remainingBudgetReferenceAmount = budget.remainingBudgetReferenceAmount.plus(
-      event.params.amount
-    );
-  }
+  log.info("Updating budget with id: {}", [budget.id.toString()]);
+  log.info("Current budget amount: {}", [budget.amount.toString()]);
+
+  budget.amount = budget.amount.plus(event.params.amount);
+  budget.currency = event.params.currency;
+  budget.remainingBudgetReferenceAmount = budget.remainingBudgetReferenceAmount.plus(
+    event.params.amount
+  );
 
   budget.save();
+
+  log.info("New budget amount: {}", [budget.amount.toString()]);
 }
 
 export function handleFungibleBudgetRemoved(
   event: FungibleBudgetRemovedEvent
 ): void {
-  const id = getBudgetId(event.address, event.params.currency);
+  log.info("Handle budget remove with contract address: {} and currency: {}", [
+    event.address.toHexString(),
+    event.params.currency.toHexString(),
+  ]);
 
-  let entity = Budget.load(id);
+  let budget = getOrCreateBudget(event.address, event.params.currency);
 
-  if (entity != null) {
-    entity.amount = entity.amount.minus(event.params.amount);
-    entity.remainingBudgetPercentage = entity.amount.div(
-      entity.remainingBudgetReferenceAmount
-    );
+  log.info("Updating budget with id: {}", [budget.id.toString()]);
+  log.info("Current budget amount: {}", [budget.amount.toString()]);
 
-    entity.save();
-  }
+  budget.amount = budget.amount.minus(event.params.amount);
+  budget.remainingBudgetReferenceAmount = budget.remainingBudgetReferenceAmount.minus(
+    event.params.amount
+  );
+
+  budget.save();
+
+  log.info("New budget amount: {}", [budget.amount.toString()]);
 }
 
 export function handleAttributed(event: AttributedEvent): void {
@@ -57,53 +64,75 @@ export function handleAttributed(event: AttributedEvent): void {
   for (let index = 0; index < receivers.length; index++) {
     const receiverAddress = receivers[index];
 
-    const id = getUserBalanceId(receiverAddress, currency, event.address);
+    log.info("Handle attribution with receiver address: {}, amount: {}", [
+      receiverAddress.toHexString(),
+      amounts[index].toString(),
+    ]);
 
-    let userBalance = UserBalance.load(id);
-
-    if (userBalance == null) {
-      userBalance = new UserBalance(id);
-
-      userBalance.account = receiverAddress.toHexString();
-      userBalance.projectContractAddress = event.address;
-      userBalance.availableToClaim = amounts[index];
-      userBalance.currency = currency;
-      userBalance.claimed = BigInt.fromI32(0);
-    } else {
-      userBalance.availableToClaim = userBalance.availableToClaim.plus(
-        amounts[index]
-      );
-    }
-
-    userBalance.save();
-  }
-
-  const projectBudgetId = getBudgetId(event.address, currency);
-  const projectBudget = Budget.load(projectBudgetId);
-
-  if (projectBudget != null) {
-    projectBudget.amount = projectBudget.amount.minus(event.params.totalAmount);
-    projectBudget.remainingBudgetPercentage = projectBudget.amount.div(
-      projectBudget.remainingBudgetReferenceAmount
+    let user = getOrCreateUser(receiverAddress);
+    let userBalance = getOrCreateUserBalance(
+      receiverAddress,
+      currency,
+      event.address
     );
+
+    log.info("User: {} > current availableToClaim: {}", [
+      user.id,
+      userBalance.availableToClaim.toString(),
+    ]);
+
+    userBalance.availableToClaim = userBalance.availableToClaim.plus(
+      amounts[index]
+    );
+
+    user.save();
+    userBalance.save();
+
+    log.info("User: {} > new availableToClaim: {}", [
+      user.id,
+      userBalance.availableToClaim.toString(),
+    ]);
   }
+
+  const projectBudget = getOrCreateBudget(event.address, currency);
+
+  projectBudget.amount = projectBudget.amount.minus(event.params.totalAmount);
+
+  projectBudget.save();
 }
 
 export function handleClaimed(event: ClaimedEvent): void {
-  const id = getUserBalanceId(
+  let user = getOrCreateUser(event.params.account);
+  let userBalance = getOrCreateUserBalance(
     event.params.account,
     event.params.currency,
     event.address
   );
 
-  let userBalance = UserBalance.load(id);
+  log.info("User: {} > current availableToClaim: {}", [
+    user.id,
+    userBalance.availableToClaim.toString(),
+  ]);
+  log.info("User: {} > current claimed: {}", [
+    user.id,
+    userBalance.claimed.toString(),
+  ]);
 
-  if (userBalance != null) {
-    userBalance.availableToClaim = userBalance.availableToClaim.minus(
-      event.params.amount
-    );
-    userBalance.claimed = userBalance.claimed.plus(event.params.amount);
+  userBalance.availableToClaim = userBalance.availableToClaim.minus(
+    event.params.amount
+  );
+  userBalance.claimed = userBalance.claimed.plus(event.params.amount);
 
-    userBalance.save();
-  }
+  user.save();
+  userBalance.save();
+
+  log.info("User: {} > new availableToClaim: {}", [
+    user.id,
+    userBalance.availableToClaim.toString(),
+  ]);
+
+  log.info("User: {} > new claimed: {}", [
+    user.id,
+    userBalance.claimed.toString(),
+  ]);
 }

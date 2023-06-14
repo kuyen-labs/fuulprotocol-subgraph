@@ -128,24 +128,17 @@ export function handleProjectCooldownUpdated(
 }
 
 export function handleProjectCreated(event: ProjectCreatedEvent): void {
-  let entity = new Project(
-    event.transaction.hash.concatI32(event.logIndex.toI32())
-  );
+  let entity = new Project(event.params.deployedAddress.toHexString());
+
   entity.projectId = event.params.projectId;
   entity.deployedAddress = event.params.deployedAddress;
   entity.eventSigner = event.params.eventSigner;
   entity.projectInfoURI = event.params.projectInfoURI;
   entity.clientFeeCollector = event.params.clientFeeCollector;
 
-  let context = new DataSourceContext();
-  context.setString(
-    "projectAddress",
-    event.params.deployedAddress.toHexString()
-  );
-
   // Start indexing the new project contract; `event.params.deployedAddress` is the
   // address of the new deployed project contract
-  FuulProject.createWithContext(event.params.deployedAddress, context);
+  FuulProject.create(event.params.deployedAddress);
 
   entity.save();
 }

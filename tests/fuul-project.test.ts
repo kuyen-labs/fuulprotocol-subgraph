@@ -17,10 +17,11 @@ import {
   handleFungibleBudgetDeposited,
 } from "../src/mappings/fuul-project";
 import { ADDRESSES, CURRENCIES } from "../src/constants";
-import { getBudgetId } from "../src/utils";
+import { getBudgetId, getUserBalanceId } from "../src/utils";
 
 const TRANSACTION_CURRENCY = CURRENCIES[0];
 const INITIAL_BUDGET = BigInt.fromI32(1000);
+const PROJECT_ADDRESS = ADDRESSES[6];
 
 describe("Describe entity assertions", () => {
   afterAll(() => {
@@ -29,7 +30,7 @@ describe("Describe entity assertions", () => {
 
   test("Handle budget deposited > Project budget should be 1000", () => {
     const newFungibleBudgetDepositedEvent = createFungibleTokenBudgetDepositedEvent(
-      ADDRESSES[6],
+      PROJECT_ADDRESS,
       INITIAL_BUDGET,
       TRANSACTION_CURRENCY
     );
@@ -38,20 +39,19 @@ describe("Describe entity assertions", () => {
 
     assert.entityCount("Budget", 1);
 
-    const budgetId = newFungibleBudgetDepositedEvent.address
-      .toHexString()
-      .concat("-")
-      .concat(TRANSACTION_CURRENCY.toHexString());
+    const budgetId = getBudgetId(
+      newFungibleBudgetDepositedEvent.address,
+      TRANSACTION_CURRENCY
+    );
 
     assert.fieldEquals("Budget", budgetId, "id", budgetId);
     assert.fieldEquals(
       "Budget",
       budgetId,
-      "account",
+      "owner",
       newFungibleBudgetDepositedEvent.address.toHexString()
     );
     assert.fieldEquals("Budget", budgetId, "amount", INITIAL_BUDGET.toString());
-    assert.fieldEquals("Budget", budgetId, "remainingBudgetPercentage", "100");
     assert.fieldEquals(
       "Budget",
       budgetId,
@@ -100,32 +100,39 @@ describe("Describe entity assertions", () => {
     assert.fieldEquals(
       "Budget",
       projectBudgetId,
-      "account",
+      "owner",
       newAttributedEvent.address.toHexString()
     );
 
+    assert.fieldEquals(
+      "Budget",
+      projectBudgetId,
+      "amount",
+      INITIAL_BUDGET.minus(totalAmount).toString()
+    );
+
     assert.entityCount("UserBalance", receivers.length);
+    assert.entityCount("User", receivers.length);
 
     for (let i = 0; i < receivers.length; i++) {
-      const receiverBalanceId = receivers[i]
-        .toHexString()
-        .concat("-")
-        .concat(TRANSACTION_CURRENCY.toHexString())
-        .concat("-")
-        .concat(newAttributedEvent.address.toHexString());
-
-      assert.fieldEquals(
-        "UserBalance",
-        receiverBalanceId,
-        "id",
-        receiverBalanceId
+      const receiverBalanceId = getUserBalanceId(
+        receivers[i],
+        TRANSACTION_CURRENCY,
+        newAttributedEvent.address
       );
 
       assert.fieldEquals(
         "UserBalance",
         receiverBalanceId,
-        "account",
+        "owner",
         receivers[i].toHexString()
+      );
+
+      assert.fieldEquals(
+        "UserBalance",
+        receiverBalanceId,
+        "project",
+        newAttributedEvent.address.toHexString()
       );
 
       assert.fieldEquals(
@@ -133,13 +140,6 @@ describe("Describe entity assertions", () => {
         receiverBalanceId,
         "availableToClaim",
         amounts[i].toString()
-      );
-
-      assert.fieldEquals(
-        "UserBalance",
-        receiverBalanceId,
-        "projectContractAddress",
-        newAttributedEvent.address.toHexString()
       );
 
       assert.fieldEquals("UserBalance", receiverBalanceId, "claimed", "0");
@@ -155,12 +155,11 @@ describe("Describe entity assertions", () => {
 
     handleClaimed(newClaimedEvent);
 
-    const userBalanceId = ADDRESSES[0]
-      .toHexString()
-      .concat("-")
-      .concat(TRANSACTION_CURRENCY.toHexString())
-      .concat("-")
-      .concat(newClaimedEvent.address.toHexString());
+    const userBalanceId = getUserBalanceId(
+      ADDRESSES[0],
+      TRANSACTION_CURRENCY,
+      newClaimedEvent.address
+    );
 
     assert.fieldEquals("UserBalance", userBalanceId, "claimed", "1");
     assert.fieldEquals("UserBalance", userBalanceId, "availableToClaim", "0");

@@ -98,6 +98,8 @@ type Project @entity {
   clientFeeCollector: Bytes! 
   budgets: [Budget!] @derivedFrom(field: "owner")
   userBalances: [UserBalance!] @derivedFrom(field: "project")
+  members: [ProjectMember!] @derivedFrom(field: "project")
+  lastRemovalApplication: BigInt
 }
 
 type UserBalance @entity {
@@ -113,4 +115,11 @@ type User @entity {
   id: ID!
   address: Bytes!
   balances: [UserBalance!] @derivedFrom(field: "owner")
+}
+
+type ProjectMember @entity {
+  id: ID!
+  project: Project!
+  address: Bytes!
+  role: String!
 }

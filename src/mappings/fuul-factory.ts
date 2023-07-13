@@ -1,4 +1,4 @@
-import { DataSourceContext } from "@graphprotocol/graph-ts";
+import { log } from "@graphprotocol/graph-ts";
 import {
   AttributorFeeUpdated as AttributorFeeUpdatedEvent,
   ClientFeeUpdated as ClientFeeUpdatedEvent,
@@ -20,13 +20,14 @@ import {
   NftFeeCurrencyUpdated,
   NftFixedFeeUpdated,
   ProjectCooldownUpdated,
-  Project,
   ProjectRemovePeriodUpdated,
   ProtocolFeeCollectorUpdated,
   ProtocolFeeUpdated,
 } from "../../generated/schema";
 
 import { FuulProject } from "../../generated/templates";
+import { getOrCreateProject } from "../entities/project";
+import { getOrCreateProjectMember } from "../entities/projectMember";
 
 export function handleAttributorFeeUpdated(
   event: AttributorFeeUpdatedEvent
@@ -128,19 +129,25 @@ export function handleProjectCooldownUpdated(
 }
 
 export function handleProjectCreated(event: ProjectCreatedEvent): void {
-  let entity = new Project(event.params.deployedAddress.toHexString());
+  log.info("Creating project with address => {}", [
+    event.params.deployedAddress.toHexString(),
+  ]);
 
-  entity.projectId = event.params.projectId;
-  entity.deployedAddress = event.params.deployedAddress;
-  entity.eventSigner = event.params.eventSigner;
-  entity.projectInfoURI = event.params.projectInfoURI;
-  entity.clientFeeCollector = event.params.clientFeeCollector;
+  const project = getOrCreateProject(
+    event.params.deployedAddress,
+    event.params
+  );
+  const projectMember = getOrCreateProjectMember(
+    event.transaction.from,
+    event.params.deployedAddress
+  );
 
   // Start indexing the new project contract; `event.params.deployedAddress` is the
   // address of the new deployed project contract
   FuulProject.create(event.params.deployedAddress);
 
-  entity.save();
+  project.save();
+  projectMember.save();
 }
 
 export function handleProjectRemovePeriodUpdated(

@@ -1,4 +1,4 @@
-import { log, newMockEvent } from "matchstick-as";
+import { newMockEvent } from "matchstick-as";
 import {
   Attributed,
   Claimed,
@@ -7,7 +7,6 @@ import {
 import { Address, BigInt, Bytes, ethereum } from "@graphprotocol/graph-ts";
 
 export function createFungibleTokenBudgetDepositedEvent(
-  account: Address,
   amount: BigInt,
   currency: Address
 ): FungibleBudgetDeposited {
@@ -16,10 +15,6 @@ export function createFungibleTokenBudgetDepositedEvent(
   );
 
   fungibleBudgetDepositedEvent.parameters = new Array();
-
-  fungibleBudgetDepositedEvent.parameters.push(
-    new ethereum.EventParam("account", ethereum.Value.fromAddress(account))
-  );
 
   fungibleBudgetDepositedEvent.parameters.push(
     new ethereum.EventParam("amount", ethereum.Value.fromUnsignedBigInt(amount))

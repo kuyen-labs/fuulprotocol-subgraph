@@ -1,13 +1,34 @@
 [
-  { "inputs": [], "name": "TokenCurrencyAlreadyAccepted", "type": "error" },
-  { "inputs": [], "name": "TokenCurrencyNotAccepted", "type": "error" },
-  { "inputs": [], "name": "Unauthorized", "type": "error" },
-  { "inputs": [], "name": "ZeroAddress", "type": "error" },
+  {
+    "inputs": [],
+    "name": "InvalidTokenType",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "TokenCurrencyAlreadyAccepted",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "TokenCurrencyNotAccepted",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "Unauthorized",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "ZeroAddress",
+    "type": "error"
+  },
   {
     "anonymous": false,
     "inputs": [
       {
-        "indexed": true,
+        "indexed": false,
         "internalType": "uint256",
         "name": "value",
         "type": "uint256"
@@ -20,7 +41,7 @@
     "anonymous": false,
     "inputs": [
       {
-        "indexed": true,
+        "indexed": false,
         "internalType": "uint256",
         "name": "value",
         "type": "uint256"
@@ -71,7 +92,7 @@
     "anonymous": false,
     "inputs": [
       {
-        "indexed": true,
+        "indexed": false,
         "internalType": "address",
         "name": "newCurrency",
         "type": "address"
@@ -84,7 +105,7 @@
     "anonymous": false,
     "inputs": [
       {
-        "indexed": true,
+        "indexed": false,
         "internalType": "uint256",
         "name": "value",
         "type": "uint256"
@@ -97,7 +118,7 @@
     "anonymous": false,
     "inputs": [
       {
-        "indexed": true,
+        "indexed": false,
         "internalType": "uint256",
         "name": "value",
         "type": "uint256"
@@ -110,7 +131,7 @@
     "anonymous": false,
     "inputs": [
       {
-        "indexed": true,
+        "indexed": false,
         "internalType": "uint256",
         "name": "projectId",
         "type": "uint256"
@@ -147,7 +168,7 @@
     "anonymous": false,
     "inputs": [
       {
-        "indexed": true,
+        "indexed": false,
         "internalType": "uint256",
         "name": "value",
         "type": "uint256"
@@ -173,7 +194,7 @@
     "anonymous": false,
     "inputs": [
       {
-        "indexed": true,
+        "indexed": false,
         "internalType": "uint256",
         "name": "value",
         "type": "uint256"
@@ -184,7 +205,11 @@
   },
   {
     "inputs": [
-      { "internalType": "address", "name": "tokenAddress", "type": "address" }
+      {
+        "internalType": "address",
+        "name": "tokenAddress",
+        "type": "address"
+      }
     ],
     "name": "acceptedCurrencies",
     "outputs": [
@@ -193,14 +218,22 @@
         "name": "tokenType",
         "type": "uint8"
       },
-      { "internalType": "bool", "name": "isAccepted", "type": "bool" }
+      {
+        "internalType": "bool",
+        "name": "isAccepted",
+        "type": "bool"
+      }
     ],
     "stateMutability": "view",
     "type": "function"
   },
   {
     "inputs": [
-      { "internalType": "address", "name": "tokenAddress", "type": "address" },
+      {
+        "internalType": "address",
+        "name": "tokenAddress",
+        "type": "address"
+      },
       {
         "internalType": "enum IFuulFactory.TokenType",
         "name": "tokenType",
@@ -214,7 +247,11 @@
   },
   {
     "inputs": [
-      { "internalType": "address", "name": "sender", "type": "address" }
+      {
+        "internalType": "address",
+        "name": "sender",
+        "type": "address"
+      }
     ],
     "name": "attributionFeeHelper",
     "outputs": [
@@ -230,7 +267,11 @@
             "name": "attributorFee",
             "type": "uint256"
           },
-          { "internalType": "uint256", "name": "clientFee", "type": "uint256" },
+          {
+            "internalType": "uint256",
+            "name": "clientFee",
+            "type": "uint256"
+          },
           {
             "internalType": "address",
             "name": "protocolFeeCollector",
@@ -259,7 +300,11 @@
     "inputs": [],
     "name": "attributorFee",
     "outputs": [
-      { "internalType": "uint256", "name": "fees", "type": "uint256" }
+      {
+        "internalType": "uint256",
+        "name": "fees",
+        "type": "uint256"
+      }
     ],
     "stateMutability": "view",
     "type": "function"
@@ -268,20 +313,32 @@
     "inputs": [],
     "name": "clientFee",
     "outputs": [
-      { "internalType": "uint256", "name": "fees", "type": "uint256" }
+      {
+        "internalType": "uint256",
+        "name": "fees",
+        "type": "uint256"
+      }
     ],
     "stateMutability": "view",
     "type": "function"
   },
   {
     "inputs": [
-      { "internalType": "address", "name": "projectAdmin", "type": "address" },
+      {
+        "internalType": "address",
+        "name": "projectAdmin",
+        "type": "address"
+      },
       {
         "internalType": "address",
         "name": "projectEventSigner",
         "type": "address"
       },
-      { "internalType": "string", "name": "projectInfoURI", "type": "string" },
+      {
+        "internalType": "string",
+        "name": "projectInfoURI",
+        "type": "string"
+      },
       {
         "internalType": "address",
         "name": "clientFeeCollector",
@@ -309,7 +366,11 @@
             "name": "attributorFee",
             "type": "uint256"
           },
-          { "internalType": "uint256", "name": "clientFee", "type": "uint256" },
+          {
+            "internalType": "uint256",
+            "name": "clientFee",
+            "type": "uint256"
+          },
           {
             "internalType": "address",
             "name": "protocolFeeCollector",
@@ -338,44 +399,49 @@
     "inputs": [],
     "name": "getBudgetRemoveInfo",
     "outputs": [
-      { "internalType": "uint256", "name": "cooldown", "type": "uint256" },
-      { "internalType": "uint256", "name": "removeWindow", "type": "uint256" }
+      {
+        "internalType": "uint256",
+        "name": "cooldown",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "removeWindow",
+        "type": "uint256"
+      }
     ],
     "stateMutability": "view",
     "type": "function"
   },
   {
     "inputs": [
-      { "internalType": "address", "name": "account", "type": "address" },
-      { "internalType": "uint256", "name": "index", "type": "uint256" }
-    ],
-    "name": "getUserProjectByIndex",
-    "outputs": [{ "internalType": "address", "name": "", "type": "address" }],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      { "internalType": "address", "name": "account", "type": "address" }
-    ],
-    "name": "getUserProjectCount",
-    "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      { "internalType": "address", "name": "account", "type": "address" }
+      {
+        "internalType": "address",
+        "name": "account",
+        "type": "address"
+      }
     ],
     "name": "hasManagerRole",
-    "outputs": [{ "internalType": "bool", "name": "", "type": "bool" }],
+    "outputs": [
+      {
+        "internalType": "bool",
+        "name": "",
+        "type": "bool"
+      }
+    ],
     "stateMutability": "view",
     "type": "function"
   },
   {
     "inputs": [],
     "name": "nftFeeCurrency",
-    "outputs": [{ "internalType": "address", "name": "", "type": "address" }],
+    "outputs": [
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      }
+    ],
     "stateMutability": "view",
     "type": "function"
   },
@@ -383,25 +449,24 @@
     "inputs": [],
     "name": "projectBudgetCooldown",
     "outputs": [
-      { "internalType": "uint256", "name": "period", "type": "uint256" }
+      {
+        "internalType": "uint256",
+        "name": "period",
+        "type": "uint256"
+      }
     ],
     "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      { "internalType": "uint256", "name": "projectId", "type": "uint256" }
-    ],
-    "name": "projects",
-    "outputs": [{ "internalType": "address", "name": "", "type": "address" }],
-    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
     "inputs": [],
     "name": "protocolFee",
     "outputs": [
-      { "internalType": "uint256", "name": "fees", "type": "uint256" }
+      {
+        "internalType": "uint256",
+        "name": "fees",
+        "type": "uint256"
+      }
     ],
     "stateMutability": "view",
     "type": "function"
@@ -409,13 +474,23 @@
   {
     "inputs": [],
     "name": "protocolFeeCollector",
-    "outputs": [{ "internalType": "address", "name": "", "type": "address" }],
+    "outputs": [
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      }
+    ],
     "stateMutability": "view",
     "type": "function"
   },
   {
     "inputs": [
-      { "internalType": "address", "name": "tokenAddress", "type": "address" }
+      {
+        "internalType": "address",
+        "name": "tokenAddress",
+        "type": "address"
+      }
     ],
     "name": "removeCurrencyToken",
     "outputs": [],
@@ -424,7 +499,11 @@
   },
   {
     "inputs": [
-      { "internalType": "uint256", "name": "value", "type": "uint256" }
+      {
+        "internalType": "uint256",
+        "name": "value",
+        "type": "uint256"
+      }
     ],
     "name": "setAttributorFee",
     "outputs": [],
@@ -433,7 +512,11 @@
   },
   {
     "inputs": [
-      { "internalType": "uint256", "name": "value", "type": "uint256" }
+      {
+        "internalType": "uint256",
+        "name": "value",
+        "type": "uint256"
+      }
     ],
     "name": "setClientFee",
     "outputs": [],
@@ -442,7 +525,11 @@
   },
   {
     "inputs": [
-      { "internalType": "address", "name": "newCurrency", "type": "address" }
+      {
+        "internalType": "address",
+        "name": "newCurrency",
+        "type": "address"
+      }
     ],
     "name": "setNftFeeCurrency",
     "outputs": [],
@@ -451,7 +538,11 @@
   },
   {
     "inputs": [
-      { "internalType": "uint256", "name": "value", "type": "uint256" }
+      {
+        "internalType": "uint256",
+        "name": "value",
+        "type": "uint256"
+      }
     ],
     "name": "setNftFixedFeeAmount",
     "outputs": [],
@@ -460,7 +551,11 @@
   },
   {
     "inputs": [
-      { "internalType": "uint256", "name": "period", "type": "uint256" }
+      {
+        "internalType": "uint256",
+        "name": "period",
+        "type": "uint256"
+      }
     ],
     "name": "setProjectBudgetCooldown",
     "outputs": [],
@@ -469,7 +564,11 @@
   },
   {
     "inputs": [
-      { "internalType": "uint256", "name": "period", "type": "uint256" }
+      {
+        "internalType": "uint256",
+        "name": "period",
+        "type": "uint256"
+      }
     ],
     "name": "setProjectRemoveBudgetPeriod",
     "outputs": [],
@@ -478,7 +577,11 @@
   },
   {
     "inputs": [
-      { "internalType": "uint256", "name": "value", "type": "uint256" }
+      {
+        "internalType": "uint256",
+        "name": "value",
+        "type": "uint256"
+      }
     ],
     "name": "setProtocolFee",
     "outputs": [],
@@ -488,7 +591,13 @@
   {
     "inputs": [],
     "name": "totalProjectsCreated",
-    "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
     "stateMutability": "view",
     "type": "function"
   }

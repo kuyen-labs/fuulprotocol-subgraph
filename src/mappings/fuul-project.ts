@@ -4,10 +4,12 @@ import {
   FungibleBudgetRemoved as FungibleBudgetRemovedEvent,
   Attributed as AttributedEvent,
   Claimed as ClaimedEvent,
+  AppliedToRemove as AppliedToRemoveEvent,
 } from "../../generated/templates/FuulProject/FuulProject";
 import { getOrCreateUser } from "../entities/user";
 import { getOrCreateUserBalance } from "../entities/userBalance";
 import { getOrCreateBudget } from "../entities/budget";
+import { getOrCreateProject } from "../entities/project";
 
 export function handleFungibleBudgetDeposited(
   event: FungibleBudgetDepositedEvent
@@ -135,4 +137,12 @@ export function handleClaimed(event: ClaimedEvent): void {
     user.id,
     userBalance.claimed.toString(),
   ]);
+}
+
+export function handleAppliedToRemove(event: AppliedToRemoveEvent): void {
+  let project = getOrCreateProject(event.address);
+
+  project.lastRemovalApplication = event.params.timestamp;
+
+  project.save();
 }

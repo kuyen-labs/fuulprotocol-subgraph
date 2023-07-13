@@ -120,6 +120,6 @@ type User @entity {
 type ProjectMember @entity {
   id: ID!
   project: Project!
-  user: User!
+  address: Bytes!
   role: String!
 }

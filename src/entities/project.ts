@@ -4,7 +4,7 @@ import { ProjectCreated__Params } from "../../generated/FuulFactory/FuulFactory"
 
 export function getOrCreateProject(
   projectAddress: Address,
-  params?: ProjectCreated__Params
+  params: ProjectCreated__Params | null = null
 ): Project {
   const id = projectAddress.toHexString();
   let project = Project.load(id);
@@ -12,7 +12,7 @@ export function getOrCreateProject(
   if (project == null) {
     project = new Project(id);
 
-    if (params != null) {
+    if (params) {
       project.projectId = params.projectId;
       project.deployedAddress = params.deployedAddress;
       project.eventSigner = params.eventSigner;

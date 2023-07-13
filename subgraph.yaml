@@ -6,9 +6,9 @@ dataSources:
     name: FuulFactory
     network: mumbai
     source:
-      address: "0x7943fc4305d773d04c48093b99b45d46945fde3e"
+      address: "0x92fc2adf8d8d7080047acf62eef106923149e40f"
       abi: FuulFactory
-      startBlock: 36280301
+      startBlock: 37300102
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.7
@@ -29,27 +29,27 @@ dataSources:
         - name: FuulFactory
           file: ./abis/FuulFactory.json
       eventHandlers:
-        - event: AttributorFeeUpdated(indexed uint256)
+        - event: AttributorFeeUpdated(uint256)
           handler: handleAttributorFeeUpdated
-        - event: ClientFeeUpdated(indexed uint256)
+        - event: ClientFeeUpdated(uint256)
           handler: handleClientFeeUpdated
         - event: CurrencyAdded(indexed address,uint8)
           handler: handleCurrencyAdded
         - event: CurrencyRemoved(indexed address,uint8)
           handler: handleCurrencyRemoved
-        - event: NftFeeCurrencyUpdated(indexed address)
+        - event: NftFeeCurrencyUpdated(address)
           handler: handleNftFeeCurrencyUpdated
-        - event: NftFixedFeeUpdated(indexed uint256)
+        - event: NftFixedFeeUpdated(uint256)
           handler: handleNftFixedFeeUpdated
-        - event: ProjectCooldownUpdated(indexed uint256)
+        - event: ProjectCooldownUpdated(uint256)
           handler: handleProjectCooldownUpdated
-        - event: ProjectCreated(indexed uint256,indexed address,indexed address,string,address)
+        - event: ProjectCreated(uint256,indexed address,indexed address,string,address)
           handler: handleProjectCreated
-        - event: ProjectRemovePeriodUpdated(indexed uint256)
+        - event: ProjectRemovePeriodUpdated(uint256)
           handler: handleProjectRemovePeriodUpdated
         - event: ProtocolFeeCollectorUpdated(indexed address)
           handler: handleProtocolFeeCollectorUpdated
-        - event: ProtocolFeeUpdated(indexed uint256)
+        - event: ProtocolFeeUpdated(uint256)
           handler: handleProtocolFeeUpdated
       file: ./src/mappings/fuul-factory.ts
   - kind: ethereum
@@ -95,12 +95,14 @@ templates:
         - name: FuulProject
           file: ./abis/FuulProject.json
       eventHandlers:
-        - event: FungibleBudgetDeposited(indexed address,indexed uint256,indexed address)
+        - event: FungibleBudgetDeposited(uint256,indexed address)
           handler: handleFungibleBudgetDeposited
-        - event: Attributed(indexed address,indexed uint256,address[5],uint256[5],bytes32)
+        - event: Attributed(indexed address,uint256,address[5],uint256[5],bytes32)
           handler: handleAttributed
-        - event: FungibleBudgetRemoved(indexed address,indexed uint256,indexed address)
+        - event: FungibleBudgetRemoved(uint256,indexed address)
           handler: handleFungibleBudgetRemoved
-        - event: Claimed(indexed address,indexed address,indexed uint256,uint256[],uint256[])
+        - event: Claimed(indexed address,indexed address,uint256,uint256[],uint256[])
           handler: handleClaimed
+        - event: AppliedToRemove(uint256)
+          handler: handleAppliedToRemove
         

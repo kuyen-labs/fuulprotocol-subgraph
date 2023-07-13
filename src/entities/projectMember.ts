@@ -13,7 +13,7 @@ export function getOrCreateProjectMember(
   if (member == null) {
     member = new ProjectMember(id);
 
-    member.user = memberAddress.toHexString();
+    member.address = memberAddress;
     member.project = projectAddress.toHexString();
     member.role = "admin";
   }

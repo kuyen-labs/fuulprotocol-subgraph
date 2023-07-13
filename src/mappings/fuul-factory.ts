@@ -1,3 +1,4 @@
+import { log } from "@graphprotocol/graph-ts";
 import {
   AttributorFeeUpdated as AttributorFeeUpdatedEvent,
   ClientFeeUpdated as ClientFeeUpdatedEvent,
@@ -128,6 +129,10 @@ export function handleProjectCooldownUpdated(
 }
 
 export function handleProjectCreated(event: ProjectCreatedEvent): void {
+  log.info("Creating project with address => {}", [
+    event.params.deployedAddress.toHexString(),
+  ]);
+
   const project = getOrCreateProject(
     event.params.deployedAddress,
     event.params

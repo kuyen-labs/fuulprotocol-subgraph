@@ -1,15 +1,19 @@
-import { BigInt, log } from "@graphprotocol/graph-ts";
+import { Address, BigInt, log, store } from "@graphprotocol/graph-ts";
 import {
   FungibleBudgetDeposited as FungibleBudgetDepositedEvent,
   FungibleBudgetRemoved as FungibleBudgetRemovedEvent,
   Attributed as AttributedEvent,
   Claimed as ClaimedEvent,
   AppliedToRemove as AppliedToRemoveEvent,
+  RoleGranted as RoleGrantedEvent,
+  RoleRevoked as RoleRevokedEvent,
 } from "../../generated/templates/FuulProject/FuulProject";
 import { getOrCreateUser } from "../entities/user";
 import { getOrCreateUserBalance } from "../entities/userBalance";
 import { getOrCreateBudget } from "../entities/budget";
 import { getOrCreateProject } from "../entities/project";
+import { ADMIN_ROLE } from "../constants";
+import { getOrCreateProjectMember } from "../entities/projectMember";
 
 export function handleFungibleBudgetDeposited(
   event: FungibleBudgetDepositedEvent
@@ -145,4 +149,54 @@ export function handleAppliedToRemove(event: AppliedToRemoveEvent): void {
   project.lastRemovalApplication = event.params.timestamp;
 
   project.save();
+}
+
+export function handleRoleGranted(event: RoleGrantedEvent): void {
+  const role = event.params.role.toHexString();
+  const zeroAddress = ADMIN_ROLE.toString();
+
+  log.info(
+    "Handle RoleGranted event for project: {} => For address: {} with Role: {}",
+    [event.address.toHexString(), event.params.account.toHexString(), role]
+  );
+
+  if (role != zeroAddress) {
+    log.info("Role is not ADMIN_ROLE, skipping. Role: {}, ADMIN_ROLE: {}", [
+      role,
+      zeroAddress,
+    ]);
+    return;
+  }
+
+  let projectMember = getOrCreateProjectMember(
+    event.params.account,
+    event.address
+  );
+
+  projectMember.save();
+}
+
+export function handleRoleRevoked(event: RoleRevokedEvent): void {
+  const role = event.params.role.toHexString();
+  const zeroAddress = ADMIN_ROLE.toString();
+
+  log.info(
+    "Handle RoleRevoked event for project: {} => For address: {} with Role: {}",
+    [event.address.toHexString(), event.params.account.toHexString(), role]
+  );
+
+  if (role != ADMIN_ROLE) {
+    log.info("Role is not ADMIN_ROLE, skipping. Role: {}, ADMIN_ROLE: {}", [
+      role,
+      zeroAddress,
+    ]);
+    return;
+  }
+
+  let projectMember = getOrCreateProjectMember(
+    event.params.account,
+    event.address
+  );
+
+  store.remove("ProjectMember", projectMember.id);
 }

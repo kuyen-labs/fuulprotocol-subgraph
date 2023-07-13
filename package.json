@@ -4,7 +4,7 @@
   "scripts": {
     "codegen": "graph codegen",
     "build": "graph build",
-    "graph:auth": "graph auth --product hosted-service ${{ env.GRAPH_AUTH_TOKEN }}",
+    "graph:auth": "cross-var graph auth --product hosted-service $GRAPH_AUTH_TOKEN",
     "deploy:hosted": "graph deploy --product hosted-service fuul-app/fuul-protocol-subgraph",
     "create-local": "graph create --node http://localhost:8020/ fuulfactory",
     "remove-local": "graph remove --node http://localhost:8020/ fuulfactory",
@@ -13,7 +13,10 @@
   },
   "dependencies": {
     "@graphprotocol/graph-cli": "0.51.0",
-    "@graphprotocol/graph-ts": "0.30.0"
+    "@graphprotocol/graph-ts": "0.30.0",
+    "cross-var": "^1.1.0"
   },
-  "devDependencies": { "matchstick-as": "0.5.0" }
+  "devDependencies": {
+    "matchstick-as": "0.5.0"
+  }
 }

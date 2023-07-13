@@ -5,7 +5,7 @@ import {
   clearStore,
   afterAll,
 } from "matchstick-as/assembly/index";
-import { Address, BigInt, Bytes, log } from "@graphprotocol/graph-ts";
+import { BigInt, Bytes } from "@graphprotocol/graph-ts";
 import {
   createAttributedEvent,
   createClaimedEvent,
@@ -30,7 +30,6 @@ describe("Describe entity assertions", () => {
 
   test("Handle budget deposited > Project budget should be 1000", () => {
     const newFungibleBudgetDepositedEvent = createFungibleTokenBudgetDepositedEvent(
-      PROJECT_ADDRESS,
       INITIAL_BUDGET,
       TRANSACTION_CURRENCY
     );

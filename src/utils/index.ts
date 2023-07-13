@@ -22,3 +22,13 @@ export const getUserBalanceId = (
     .concat("-")
     .concat(projectContractAddress.toHexString());
 };
+
+export const getProjectMemberId = (
+  projectContractAddress: Address,
+  currency: Address
+): string => {
+  return projectContractAddress
+    .toHexString()
+    .concat("-")
+    .concat(currency.toHexString());
+};

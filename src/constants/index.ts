@@ -18,3 +18,5 @@ export const CURRENCIES = [
   Address.fromString("0x7ceB23fD6bC0adD59E62ac25578270cFf1b9f619"),
   Address.fromString("0xa16081f360e3847006db660bae1c6d1b2e17ec2c"),
 ];
+
+export const ADDRESS_ZERO = "0x0000000000000000000000000000000000000000";

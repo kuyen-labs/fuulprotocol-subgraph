@@ -1,4 +1,3 @@
-import { DataSourceContext } from "@graphprotocol/graph-ts";
 import {
   AttributorFeeUpdated as AttributorFeeUpdatedEvent,
   ClientFeeUpdated as ClientFeeUpdatedEvent,
@@ -20,7 +19,6 @@ import {
   NftFeeCurrencyUpdated,
   NftFixedFeeUpdated,
   ProjectCooldownUpdated,
-  Project,
   ProjectRemovePeriodUpdated,
   ProtocolFeeCollectorUpdated,
   ProtocolFeeUpdated,

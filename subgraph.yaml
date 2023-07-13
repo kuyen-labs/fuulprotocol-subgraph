@@ -52,6 +52,29 @@ dataSources:
         - event: ProtocolFeeUpdated(indexed uint256)
           handler: handleProtocolFeeUpdated
       file: ./src/mappings/fuul-factory.ts
+  - kind: ethereum
+    name: FuulManager
+    network: mumbai
+    source:
+      address: "0x49b73F4B598175bAF6C924D389f10a0b02134d18"
+      abi: FuulManager
+      startBlock: 37295544
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      entities:
+        - RoleGranted
+        - RoleRevoked
+      abis:
+        - name: FuulManager
+          file: ./abis/FuulManager.json
+      eventHandlers:
+        - event: RoleGranted(indexed bytes32,indexed address,indexed address)
+          handler: handleRoleGranted
+        - event: RoleRevoked(indexed bytes32,indexed address,indexed address)
+          handler: handleRoleRevoked
+      file: ./src/mappings/fuul-manager.ts
 templates:
   - name: FuulProject
     kind: ethereum

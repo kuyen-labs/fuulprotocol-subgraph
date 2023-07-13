@@ -15,5 +15,7 @@ jobs:
         cache: 'npm'
     - run: npm ci
     - run: npm run codegen && npm run build
-    - run: graph auth --product hosted-service ${{ secrets.GRAPH_AUTH_TOKEN }}
+    - run: npm run graph:auth
+      env:
+        GRAPH_AUTH_TOKEN: ${{ secrets.GRAPH_AUTH_TOKEN }}
     - run: npm run deploy:hosted

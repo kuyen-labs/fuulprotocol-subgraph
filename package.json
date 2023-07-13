@@ -4,6 +4,7 @@
   "scripts": {
     "codegen": "graph codegen",
     "build": "graph build",
+    "graph:auth": "graph auth --product hosted-service ${{ env.GRAPH_AUTH_TOKEN }}",
     "deploy:hosted": "graph deploy --product hosted-service fuul-app/fuul-protocol-subgraph",
     "create-local": "graph create --node http://localhost:8020/ fuulfactory",
     "remove-local": "graph remove --node http://localhost:8020/ fuulfactory",

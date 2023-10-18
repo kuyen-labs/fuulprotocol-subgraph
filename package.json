@@ -3,9 +3,17 @@
   "license": "UNLICENSED",
   "scripts": {
     "codegen": "graph codegen",
-    "build": "graph build",
-    "graph:auth": "cross-var graph auth --product hosted-service $GRAPH_AUTH_TOKEN",
-    "deploy:hosted": "graph deploy --product hosted-service fuul-app/fuul-protocol-subgraph",
+    "build:mumbai": "graph build --network mumbai --network-file ./networks.json",
+    "build:goerli": "graph build --network goerli --network-file ./networks.json",
+    "build:matic": "graph build --network matic --network-file ./networks.json",
+    "build:base": "graph build --network basei --network-file ./networks.json",
+    "build:optimism": "graph build --network optimism --network-file ./networks.json",
+    "graph:auth": "graph auth --product hosted-service",
+    "deploy:mumbai": "npm run build:mumbai && graph deploy --product hosted-service fuul-protocol/test",
+    "deploy:goerli": "npm run build:goerli && graph deploy --product hosted-service fuul-protocol/goerli",
+    "deploy:matic": "npm run build:matic && graph deploy --product hosted-service fuul-protocol/matic",
+    "deploy:base": "npm run build:base && graph deploy --product hosted-service fuul-protocol/base",
+    "deploy:optimism": "npm run build:optimism && graph deploy --product hosted-service fuul-protocol/optimism",
     "create-local": "graph create --node http://localhost:8020/ fuulfactory",
     "remove-local": "graph remove --node http://localhost:8020/ fuulfactory",
     "deploy-local": "graph deploy --node http://localhost:8020/ --ipfs http://localhost:5001 fuulfactory",
@@ -13,10 +21,10 @@
   },
   "dependencies": {
     "@graphprotocol/graph-cli": "0.51.0",
-    "@graphprotocol/graph-ts": "0.30.0",
-    "cross-var": "^1.1.0"
+    "@graphprotocol/graph-ts": "0.30.0"
   },
   "devDependencies": {
     "matchstick-as": "0.5.0"
   }
 }
+

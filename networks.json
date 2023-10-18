@@ -1,8 +1,33 @@
 {
   "mumbai": {
     "FuulFactory": {
-      "address": "0x7943fc4305d773d04c48093b99b45d46945fde3e",
-      "startBlock": 0
+      "address": "0x3AC79DdcC9f0449494dBAdD4A394d300623A4bED",
+      "startBlock": 38260718
+    }
+  },
+  "goerli": {
+    "FuulFactory": {
+      "address": "0xe372c8993Bf2a8FCa800cDEf0eF65E58339Ad1e3",
+      "startBlock": 9578003
+    }
+  },
+  "matic": {
+    "FuulFactory": {
+      "address": "0x457dca0de973e01d36cedaf7f5b4b8b66d6c0ef5",
+      "startBlock": 46872262
+    }
+  },
+  "optimism": {
+    "FuulFactory": {
+      "address": "0x457DCa0de973E01d36CEdaF7f5b4b8b66D6C0ef5",
+      "startBlock": 109689567
+    }
+  },
+  "base": {
+    "FuulFactory": {
+      "address": "0x457DCa0de973E01d36CEdaF7f5b4b8b66D6C0ef5",
+      "startBlock": 3531220
     }
   }
 }
+

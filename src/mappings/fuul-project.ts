@@ -1,4 +1,4 @@
-import { Address, BigInt, log, store } from "@graphprotocol/graph-ts";
+import { log, store } from "@graphprotocol/graph-ts";
 import {
   FungibleBudgetDeposited as FungibleBudgetDepositedEvent,
   FungibleBudgetRemoved as FungibleBudgetRemovedEvent,
@@ -200,3 +200,4 @@ export function handleRoleRevoked(event: RoleRevokedEvent): void {
 
   store.remove("ProjectMember", projectMember.id);
 }
+

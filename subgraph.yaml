@@ -6,9 +6,9 @@ dataSources:
     name: FuulFactory
     network: mumbai
     source:
-      address: "0x92fc2adf8d8d7080047acf62eef106923149e40f"
       abi: FuulFactory
-      startBlock: 37300102
+      address: "0x3AC79DdcC9f0449494dBAdD4A394d300623A4bED"
+      startBlock: 38260718
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.7
@@ -88,4 +88,3 @@ templates:
           handler: handleRoleGranted
         - event: RoleRevoked(indexed bytes32,indexed address,indexed address)
           handler: handleRoleRevoked
-        

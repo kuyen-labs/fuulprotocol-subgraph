@@ -1,8 +1,8 @@
 {
   "mumbai": {
     "FuulFactory": {
-      "address": "0x3AC79DdcC9f0449494dBAdD4A394d300623A4bED",
-      "startBlock": 38260718
+      "address": "0x92Fc2AdF8D8D7080047ACF62EEf106923149e40F",
+      "startBlock": 37300102
     }
   },
   "goerli": {

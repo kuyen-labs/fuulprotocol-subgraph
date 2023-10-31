@@ -4,7 +4,7 @@ schema:
 dataSources:
   - kind: ethereum
     name: FuulFactory
-    network: arbitrum
+    network: arbitrum-one
     source:
       abi: FuulFactory
       address: "0x457DCa0de973E01d36CEdaF7f5b4b8b66D6C0ef5"
@@ -55,7 +55,7 @@ dataSources:
 templates:
   - name: FuulProject
     kind: ethereum
-    network: arbitrum
+    network: arbitrum-one
     source:
       abi: FuulProject
     mapping:

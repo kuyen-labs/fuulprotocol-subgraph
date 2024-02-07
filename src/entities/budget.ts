@@ -14,6 +14,7 @@ chains.push({ name: "goerli", chainId: 5 });
 chains.push({ name: "matic", chainId: 137 });
 chains.push({ name: "base", chainId: 8453 });
 chains.push({ name: "optimism", chainId: 10 });
+chains.push({ name: "arbitrum-one", chainId: 42161 });
 
 export function getOrCreateBudget(
   projectAddress: Address,

@@ -17,10 +17,11 @@ chains.push({ name: "optimism", chainId: 10 });
 chains.push({ name: "arbitrum-one", chainId: 42161 });
 chains.push({ name: "bsc", chainId: 56 });
 chains.push({ name: "base-sepolia", chainId: 84532 });
+chains.push({ name: "zksync-era", chainId: 324 });
 
 export function getOrCreateBudget(
   projectAddress: Address,
-  currency: Address
+  currency: Address,
 ): Budget {
   const id = getBudgetId(projectAddress, currency);
   let budget = Budget.load(id);
@@ -45,4 +46,3 @@ export function getOrCreateBudget(
   budget.save();
   return budget as Budget;
 }
-

@@ -4,11 +4,11 @@ schema:
 dataSources:
   - kind: ethereum
     name: FuulFactory
-    network: base-sepolia
+    network: zksync-era
     source:
       abi: FuulFactory
-      address: "0x5361Dee3B2110F9Da5F6c9E39D692cf3DDE24CB2"
-      startBlock: 8581416
+      address: "0xA0Ae35bA13F677153707414E3cb82faCc69e8AeB"
+      startBlock: 35972131
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.7
@@ -55,7 +55,7 @@ dataSources:
 templates:
   - name: FuulProject
     kind: ethereum
-    network: base-sepolia
+    network: zksync-era
     source:
       abi: FuulProject
     mapping:

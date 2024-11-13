@@ -46,5 +46,11 @@
       "address": "0xA0Ae35bA13F677153707414E3cb82faCc69e8AeB",
       "startBlock": 35972131
     }
+  },
+  "mode": {
+    "FuulFactory": {
+      "address": "0x457DCa0de973E01d36CEdaF7f5b4b8b66D6C0ef5",
+      "startBlock": 15642305
+    }
   }
 }

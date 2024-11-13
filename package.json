@@ -12,7 +12,7 @@
     "build:bsc": "graph build --network bsc --network-file ./networks.json",
     "build:base-sepolia": "graph build --network base-sepolia --network-file ./networks.json",
     "build:zksync-era": "graph build --network zksync-era --network-file ./networks.json",
-    "build:mode": "graph build --network mode --network-file ./networks.json",
+    "build:mode": "graph build --network mode-mainnet --network-file ./networks.json",
     "graph:auth": "graph auth --product hosted-service",
     "deploy:mumbai": "npm run build:mumbai && graph deploy --product hosted-service fuul-protocol/mumbai",
     "deploy:goerli": "npm run build:goerli && graph deploy --product hosted-service fuul-protocol/goerli",

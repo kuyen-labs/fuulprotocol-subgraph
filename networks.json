@@ -47,7 +47,7 @@
       "startBlock": 35972131
     }
   },
-  "mode": {
+  "mode-mainnet": {
     "FuulFactory": {
       "address": "0x457DCa0de973E01d36CEdaF7f5b4b8b66D6C0ef5",
       "startBlock": 15642305

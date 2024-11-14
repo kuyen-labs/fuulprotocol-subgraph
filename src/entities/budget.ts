@@ -18,7 +18,7 @@ chains.push({ name: "arbitrum-one", chainId: 42161 });
 chains.push({ name: "bsc", chainId: 56 });
 chains.push({ name: "base-sepolia", chainId: 84532 });
 chains.push({ name: "zksync-era", chainId: 324 });
-chains.push({ name: "mode", chainId: 34443 });
+chains.push({ name: "mode-mainnet", chainId: 34443 });
 
 export function getOrCreateBudget(
   projectAddress: Address,
@@ -28,9 +28,17 @@ export function getOrCreateBudget(
   let budget = Budget.load(id);
 
   if (budget == null) {
-    const chainId = chains.filter((chain) => {
+    const filteredChains = chains.filter((chain) => {
       return chain.name == dataSource.network();
-    })[0].chainId;
+    });
+
+    if (filteredChains.length === 0) {
+      log.error(`getOrCreateBudget: could not determine chain from network`, [
+        dataSource.network(),
+      ]);
+    }
+
+    const chainId = filteredChains[0].chainId;
 
     budget = new Budget(id);
 

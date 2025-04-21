@@ -52,5 +52,11 @@
       "address": "0x457DCa0de973E01d36CEdaF7f5b4b8b66D6C0ef5",
       "startBlock": 15642305
     }
+  },
+  "abstract-mainnet": {
+    "FuulFactory": {
+      "address": "0x48955e80B47e0FC170D3BFA3e85d15960388c0EC",
+      "startBlock": 7030216
+    }
   }
 }

@@ -19,6 +19,7 @@ chains.push({ name: "bsc", chainId: 56 });
 chains.push({ name: "base-sepolia", chainId: 84532 });
 chains.push({ name: "zksync-era", chainId: 324 });
 chains.push({ name: "mode-mainnet", chainId: 34443 });
+chains.push({ name: "abstract-mainnet", chainId: 2741 });
 
 export function getOrCreateBudget(
   projectAddress: Address,

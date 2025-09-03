@@ -29,7 +29,7 @@
     "deploy:mode": "npm run build:mode && graph deploy --studio fuul-protocol-mode",
     "deploy:abstract": "npm run build:abstract && graph deploy abstract --node https://subgraphs.alchemy.com/api/subgraphs/deploy --ipfs https://ipfs.satsuma.xyz",
     "deploy:monad-testnet": "npm run build:monad-testnet && graph deploy monad-testnet --node https://subgraphs.alchemy.com/api/subgraphs/deploy --ipfs https://ipfs.satsuma.xyz",
-    "deploy:hyperevm": "npm run build:hyperevm && goldsky subgraph deploy fuul-factory-hyperevm/1.0.0 --path .",
+    "deploy:hyperevm": "npm run build:hyperevm && goldsky subgraph deploy fuul-protocol-hyperevm/1.0.0 --path .",
     "create-local": "graph create --node http://localhost:8020/ fuulfactory",
     "remove-local": "graph remove --node http://localhost:8020/ fuulfactory",
     "deploy-local": "graph deploy --node http://localhost:8020/ --ipfs http://localhost:5001 fuulfactory",

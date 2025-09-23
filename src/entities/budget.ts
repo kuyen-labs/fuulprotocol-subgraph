@@ -22,6 +22,8 @@ chains.push({ name: "mode-mainnet", chainId: 34443 });
 chains.push({ name: "abstract-mainnet", chainId: 2741 });
 chains.push({ name: "monad-testnet", chainId: 10143 });
 chains.push({ name: "hyperevm", chainId: 999 });
+chains.push({ name: "ethereum", chainId: 1 });
+chains.push({ name: "mainnet", chainId: 1 });
 
 export function getOrCreateBudget(
   projectAddress: Address,
